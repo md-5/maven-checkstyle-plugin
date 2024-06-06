@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import com.puppycrawl.tools.checkstyle.AbstractAutomaticBean;
 import com.puppycrawl.tools.checkstyle.DefaultLogger;
 import com.puppycrawl.tools.checkstyle.SarifLogger;
 import com.puppycrawl.tools.checkstyle.XMLLogger;
@@ -667,7 +668,8 @@ public abstract class AbstractCheckstyleReport extends AbstractMavenReport {
                 listener = new DefaultLogger(out, OutputStreamOptions.CLOSE);
             } else if ("sarif".equals(outputFileFormat)) {
                 try {
-                    listener = new SarifLogger(out, OutputStreamOptions.CLOSE);
+                    listener = new SarifLogger(
+                            out, AbstractAutomaticBean.OutputStreamOptions.valueOf(OutputStreamOptions.CLOSE.name()));
                 } catch (IOException e) {
                     throw new MavenReportException("Failed to create SarifLogger", e);
                 }
